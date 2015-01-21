@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BTCrawler.Common.Crawler;
 using BTCrawler.Common.FileHandler;
 
@@ -9,12 +10,16 @@ namespace BTCrawler.Common
         private readonly IAlreadyDownloadListFileLoader _alreadyDownloadListFileLoader;
         private readonly IHtmlLoader _detailPageLoader;
         private readonly IHtmlLoader _listingPageloader;
+        private readonly string _outputPath;
+        private readonly Action<string> _writeMessage;
 
-        public Controller(IAlreadyDownloadListFileLoader alreadyDownloadListFileLoader, IHtmlLoader listingPageLoader, IHtmlLoader detailPageLoader)
+        public Controller(IAlreadyDownloadListFileLoader alreadyDownloadListFileLoader, IHtmlLoader listingPageLoader, IHtmlLoader detailPageLoader, string outputPath, Action<string> writeMessage)
         {
             _alreadyDownloadListFileLoader = alreadyDownloadListFileLoader;
             _detailPageLoader = detailPageLoader;
             _listingPageloader = listingPageLoader;
+            _outputPath = outputPath;
+            _writeMessage = writeMessage;
         }
 
         public void DoDownload(string alreadyDownloadedListFileName)
@@ -36,7 +41,9 @@ namespace BTCrawler.Common
                 {
                     HtmlSourceDownloader downloader = new HtmlSourceDownloader();
 
-                    
+                    downloader.DownloadFile(detailLink.Url, _outputPath);
+
+                    _writeMessage(string.Format("Downloaded file {0}", link.Name));
                 }
             }
         }

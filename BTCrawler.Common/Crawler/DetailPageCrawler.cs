@@ -25,6 +25,9 @@ namespace BTCrawler.Common.Crawler
         {
             var matches = Regex.Matches(_htmlText, @"<a href=""attachment.php\?aid=([A-Za-z0-9%<>&;\??\/.,:\""= ()_\p{L}]+)"">");
 
+            if (matches.Count == 0)
+                return new DownloadLink();
+
             return new DownloadLink
                        {
                            Url = matches[0].ToString().Replace("<a href=\"", "").Replace(">","").Replace("\"", "")

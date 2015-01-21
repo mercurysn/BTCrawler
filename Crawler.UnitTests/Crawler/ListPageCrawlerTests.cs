@@ -29,5 +29,15 @@ namespace Crawler.UnitTests.Crawler
             Assert.AreEqual("TVBOXNOW 宦海奇官 Ch02_1280x720.torrent", downloadLinkCollection[1].Name);
             Assert.AreEqual("TVBOXNOW 宦海奇官 Ch03_1280x720.torrent", downloadLinkCollection[2].Name);
         }
+
+        [Test]
+        public void TestCrawler_Listing_Page_Retrieve_No_Link_Dont_Throw_Exception()
+        {
+            _mockLoader.Setup(x => x.LoadSource()).Returns("");
+
+            ListingPageCrawler crawler = new ListingPageCrawler(_mockLoader.Object);
+
+            crawler.GetLinks();
+        }
     }
 }

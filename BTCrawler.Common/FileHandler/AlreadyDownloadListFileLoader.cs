@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace BTCrawler.Common.FileHandler
 {
@@ -6,7 +7,7 @@ namespace BTCrawler.Common.FileHandler
     {
         public List<string> LoadListFromFile(string filename)
         {
-            return new List<string>();
+            return new List<string>(File.ReadAllLines(filename));
         }
     }
 }

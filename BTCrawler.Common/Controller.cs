@@ -32,7 +32,6 @@ namespace BTCrawler.Common
 
             foreach (var link in links)
             {
-                
                 DetailPageCrawler detailPageCrawler = new DetailPageCrawler(_detailPageLoader, link.Url);
 
                 DownloadLink detailLink = detailPageCrawler.GetLink();

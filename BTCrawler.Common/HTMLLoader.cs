@@ -1,9 +1,15 @@
 ﻿using System.Net;
+using System.Text;
 
 namespace BTCrawler.Common
 {
     public class HtmlLoader : IHtmlLoader
     {
+        public HtmlLoader()
+        {
+
+        }
+
         public HtmlLoader(string url)
         {
             Url = url;
@@ -18,7 +24,7 @@ namespace BTCrawler.Common
 
         public string LoadSource(string url)
         {
-            using (WebClient client = new WebClient()) // WebClient class inherits IDisposable
+            using (WebClient client = new WebClient { Encoding = Encoding.UTF8}) // WebClient class inherits IDisposable
             {
                 return client.DownloadString(url);
             }

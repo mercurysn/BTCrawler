@@ -21,6 +21,11 @@ namespace BTCrawler.Common.Crawler
         {
             var matches = Regex.Matches(_htmlText, @"<span style=""white-space([A-Za-z0-9%<>&;\??\/.,:\""= ()_\p{L}]+)</span>");
 
+            if (matches.Count == 0)
+            {
+                matches = Regex.Matches(_htmlText, @"<a href=""attachment.php\?aid=([A-Za-z0-9%<>&;\?\/\.,:\""=\- ()_\p{L}]+)torrent</a>");
+            }
+
             List<DownloadLink> downloadLinkCollection = new List<DownloadLink>();
 
             foreach (Match match in matches)
@@ -54,15 +59,26 @@ namespace BTCrawler.Common.Crawler
         private static string GetNameMatch(Match match)
         {
             var nameMatches = Regex.Matches(match.ToString(), @"<strong>([A-Za-z0-9%<>&;\??\/., _:\""=()\p{L}]+)</strong>");
-            var nameMatch = nameMatches[0].ToString().Replace("<strong>", "").Replace("</strong>", "");
+
+            string nameMatch;
+
+            if (nameMatches.Count > 0)
+                nameMatch = nameMatches[0].ToString().Replace("<strong>", "").Replace("</strong>", "");
+            else
+            {
+                nameMatches = Regex.Matches(match.ToString(), @">([A-Za-z0-9%<>&;\??\/.,\- _:\""=()\p{L}]+)torrent<");
+                nameMatch = nameMatches[0].ToString().Replace(">", "").Replace("<", "");
+            }
+
             return nameMatch;
         }
+
 
         private static string GetLinkMatch(Match match)
         {
             var linkMatches = Regex.Matches(match.ToString(), @"attachment.php?([A-Za-z0-9%<>&;\??\/.,:\""=()\p{L}]+)");
             var linkMatch = linkMatches[0].ToString().Replace("\"", "");
-            return linkMatch;
+            return string.Format("http://tvboxnow.com/{0}", linkMatch);
         }
     }
 }

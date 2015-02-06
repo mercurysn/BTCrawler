@@ -48,6 +48,7 @@
     <Compile Include="HTMLLoader.cs" />
     <Compile Include="HtmlSourceDownloader.cs" />
     <Compile Include="IHtmlLoader.cs" />
+    <Compile Include="ListingUrlFileLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

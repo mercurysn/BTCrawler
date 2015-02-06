@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using BTCrawler.Common.Crawler;
 using BTCrawler.Common.FileHandler;
 
@@ -32,17 +34,24 @@ namespace BTCrawler.Common
 
             foreach (var link in links)
             {
-                DetailPageCrawler detailPageCrawler = new DetailPageCrawler(_detailPageLoader, link.Url);
+                //DetailPageCrawler detailPageCrawler = new DetailPageCrawler(_detailPageLoader, link.Url);
 
-                DownloadLink detailLink = detailPageCrawler.GetLink();
+                //DownloadLink detailLink = detailPageCrawler.GetLink();
 
-                if (!alreadyDownloadedList.Contains(detailLink.Name))
+                if (!alreadyDownloadedList.Contains(link.Name) && !link.Name.ToLower().Contains("divx"))
                 {
                     HtmlSourceDownloader downloader = new HtmlSourceDownloader();
 
-                    downloader.DownloadFile(detailLink.Url, _outputPath);
+                    downloader.DownloadFile(link.Url, _outputPath);
 
                     _writeMessage(string.Format("Downloaded file {0}", link.Name));
+
+                    File.AppendAllText(alreadyDownloadedListFileName, link.Name + Environment.NewLine, Encoding.UTF8);
+                    File.AppendAllText(alreadyDownloadedListFileName, link.Name.Replace("_1280x720", "") + Environment.NewLine, Encoding.UTF8);
+                }
+                else
+                {
+                    _writeMessage(string.Format("Already downloaded: {0}", link.Name));
                 }
             }
         }

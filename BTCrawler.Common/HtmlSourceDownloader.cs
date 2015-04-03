@@ -22,6 +22,9 @@ namespace BTCrawler.Common
             //firefoxProfile.SetPreference("browser.download.manager.showWhenStarting", false);
             firefoxProfile.SetPreference("browser.download.dir", outputPath);
             firefoxProfile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-bittorrent");
+            firefoxProfile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/force-download");
+            //firefoxProfile.SetPreference("browser.helperApps.alwaysAsk.force", false);
+            //firefoxProfile.SetPreference("browser.download.manager.showWhenStarting", false);
 
             IWebDriver driver = new FirefoxDriver(firefoxProfile);
 

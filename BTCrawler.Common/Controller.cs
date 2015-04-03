@@ -40,11 +40,19 @@ namespace BTCrawler.Common
 
                 if (!alreadyDownloadedList.Contains(link.Name) && !link.Name.ToLower().Contains("divx"))
                 {
+                    int retryCount = 0;
+
                     HtmlSourceDownloader downloader = new HtmlSourceDownloader();
 
-                    downloader.DownloadFile(link.Url, _outputPath);
+                    while (!File.Exists(_outputPath + @"\" + link.Name) && retryCount < 10)
+                    {
+                     downloader.DownloadFile(link.Url, _outputPath);
 
-                    _writeMessage(string.Format("Downloaded file {0}", link.Name));
+                        retryCount++;
+                    }
+
+                    
+                   _writeMessage(string.Format("Downloaded file {0}", link.Name));
 
                     File.AppendAllText(alreadyDownloadedListFileName, link.Name + Environment.NewLine, Encoding.UTF8);
                     File.AppendAllText(alreadyDownloadedListFileName, link.Name.Replace("_1280x720", "") + Environment.NewLine, Encoding.UTF8);

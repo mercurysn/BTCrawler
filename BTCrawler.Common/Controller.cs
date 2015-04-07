@@ -46,16 +46,18 @@ namespace BTCrawler.Common
 
                     while (!File.Exists(_outputPath + @"\" + link.Name) && retryCount < 10)
                     {
-                     downloader.DownloadFile(link.Url, _outputPath);
+                        downloader.DownloadFile(link.Url, _outputPath);
 
                         retryCount++;
                     }
 
-                    
-                   _writeMessage(string.Format("Downloaded file {0}", link.Name));
+                    if (File.Exists(_outputPath + @"\" + link.Name))
+                    {
+                        _writeMessage(string.Format("Downloaded file {0}", link.Name));
 
-                    File.AppendAllText(alreadyDownloadedListFileName, link.Name + Environment.NewLine, Encoding.UTF8);
-                    File.AppendAllText(alreadyDownloadedListFileName, link.Name.Replace("_1280x720", "") + Environment.NewLine, Encoding.UTF8);
+                        File.AppendAllText(alreadyDownloadedListFileName, link.Name + Environment.NewLine, Encoding.UTF8);
+                        File.AppendAllText(alreadyDownloadedListFileName, link.Name.Replace("_1280x720", "") + Environment.NewLine, Encoding.UTF8);
+                    }
                 }
                 else
                 {

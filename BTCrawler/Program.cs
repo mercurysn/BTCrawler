@@ -10,13 +10,13 @@ namespace BTCrawler
     {
         static void Main(string[] args)
         {
-            string listingPageUrlFilePath = @"C:\Users\Mercury\Dropbox\Android Download\To Be Downloaded.txt";
-            string outputFilePath = @"C:\Users\Mercury\Dropbox\Android Download";
-            string alreadyDownloadedFileName = @"C:\Users\Mercury\Dropbox\Android Download\Downloaded.txt";
+            //string listingPageUrlFilePath = @"C:\Users\Mercury\Dropbox\Android Download\To Be Downloaded.txt";
+            //string outputFilePath = @"C:\Users\Mercury\Dropbox\Android Download";
+            //string alreadyDownloadedFileName = @"C:\Users\Mercury\Dropbox\Android Download\Downloaded.txt";
 
-            //string listingPageUrlFilePath = args[0];
-            //string outputFilePath = args[1];
-            //string alreadyDownloadedFileName = args[2];
+            string listingPageUrlFilePath = args[0];
+            string outputFilePath = args[1];
+            string alreadyDownloadedFileName = args[2];
 
             Action<string> writeMessage = x => Console.WriteLine(x);
 

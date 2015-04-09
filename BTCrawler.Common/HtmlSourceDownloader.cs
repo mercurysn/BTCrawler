@@ -9,7 +9,7 @@ namespace BTCrawler.Common
 {
     public class HtmlSourceDownloader
     {
-        public bool DownloadFile(string url, string outputPath)
+        public bool DownloadFile(string url, string outputPath, int preference = 1)
         {
             //using (WebClient client = new WebClient()) // WebClient class inherits IDisposable
             //{
@@ -21,8 +21,11 @@ namespace BTCrawler.Common
             firefoxProfile.SetPreference("browser.download.folderList", 2);
             //firefoxProfile.SetPreference("browser.download.manager.showWhenStarting", false);
             firefoxProfile.SetPreference("browser.download.dir", outputPath);
-            firefoxProfile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-bittorrent");
-            firefoxProfile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/force-download");
+
+            if (preference % 2 == 1)
+                firefoxProfile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-bittorrent");
+            else
+                firefoxProfile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/force-download");
             //firefoxProfile.SetPreference("browser.helperApps.alwaysAsk.force", false);
             //firefoxProfile.SetPreference("browser.download.manager.showWhenStarting", false);
 

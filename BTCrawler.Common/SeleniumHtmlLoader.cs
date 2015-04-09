@@ -30,19 +30,32 @@ namespace BTCrawler.Common
 
         public string LoadSource(string url)
         {
+            
+
+            
             IWebDriver driver = new FirefoxDriver();
+            string source = "";
 
-            driver.Navigate().GoToUrl(url);
+            try
+            {
 
-            driver.FindElement(By.Name("username")).SendKeys(_loginName);
-            driver.FindElement(By.Name("password")).SendKeys(_password);
 
-            driver.FindElement(By.Name("loginsubmit")).Click();
+                driver.Navigate().GoToUrl(url);
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until((d) => { return d.Url.ToLower().Equals(url); });
+                driver.FindElement(By.Name("username")).SendKeys(_loginName);
+                driver.FindElement(By.Name("password")).SendKeys(_password);
 
-            string source = driver.PageSource;
+                driver.FindElement(By.Name("loginsubmit")).Click();
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until((d) => { return d.Url.ToLower().Equals(url); });
+
+                source = driver.PageSource;
+            }
+            catch
+            {
+
+            }
 
             driver.Dispose();
 

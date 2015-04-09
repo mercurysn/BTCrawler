@@ -46,7 +46,7 @@ namespace BTCrawler.Common
 
                     while (!File.Exists(_outputPath + @"\" + link.Name) && retryCount < 10)
                     {
-                        downloader.DownloadFile(link.Url, _outputPath);
+                        downloader.DownloadFile(link.Url, _outputPath, retryCount);
 
                         retryCount++;
                     }
